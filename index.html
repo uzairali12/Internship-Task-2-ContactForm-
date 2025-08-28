@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Contact Form</title>
+  <style>
+    /* Reset + Font */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e1e2f, #3b3b5d);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #1e1e2f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 6px solid #3b3b5d;
+      border-top: 6px solid #fff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Main container */
+    .contact-container {
+      max-width: 600px;
+      margin: 100px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      transform: translateY(50px);
+      opacity: 0;
+      transition: all 1s ease;
+    }
+
+    .contact-container.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .contact-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 2rem;
+      color: #fefefe;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #ccc;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      outline: none;
+      transition: border-color 0.3s ease, background-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #8ab4f8;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-group button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #6c63ff, #5f9df7);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(138, 180, 248, 0.5);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .contact-container {
+        margin: 40px 20px;
+        padding: 20px;
+      }
+
+      .contact-container h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Contact Form -->
+  <form class="contact-container" id="contactForm">
+    <h2>Get in Touch ✉️</h2>
+    <div class="form-group">
+      <label for="fullName">Full Name *</label>
+      <input type="text" id="fullName" name="fullName" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address *</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label for="subject">Subject *</label>
+      <input type="text" id="subject" name="subject" required />
+    </div>
+    <div class="form-group">
+      <label for="message">Message *</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+    <div class="form-group">
+      <button type="submit">Send Message 🚀</button>
+    </div>
+  </form>
+
+  <script>
+    // Preloader
+    window.addEventListener('load', () => {
+      document.getElementById("preloader").style.display = "none";
+      document.querySelector(".contact-container").classList.add("visible");
+    });
+
+    // Form validation
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = form.fullName.value.trim();
+      const email = form.email.value.trim();
+      const subject = form.subject.value.trim();
+      const message = form.message.value.trim();
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!name || !email || !subject || !message) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      alert("Thanks! Your message has been sent.");
+      form.reset();
+    });
+  </script>
+</body>
+</html>
